@@ -1,20 +1,43 @@
 package com.example.RegionDirectory.service.mapper;
 
-
+import com.example.RegionDirectory.boundary.model.RegionDto;
 import com.example.RegionDirectory.repository.entity.Region;
-import org.apache.ibatis.annotations.Mapper;
+import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+/**
+ * Region mapper.
+ */
+@Component
+@Log4j2
+public class RegionMapper {
 
-@Mapper
-public interface RegionMapper {
-    public void insert(Region region);
+    /**
+     * Transfer data from region to region DTO.
+     * @param region region
+     * @return region DTO
+     */
+    public RegionDto toDto(@NonNull Region region) {
+        log.info("RegionMapper.toDto was called with {}", region);
+        RegionDto entity = new RegionDto();
+        entity.setId(region.getId());
+        entity.setRegionName(region.getRegionName());
+        entity.setShortRegionName(region.getShortRegionName());
+        return entity;
+    }
 
-    public void delete(Long id);
-
-    public void update(Region region);
-
-    public Region getById(Long id);
-
-    public List<Region> list();
+    /**
+     * Transfer data from region DTO to region.
+     * @param regionDto region DTO
+     * @return region
+     */
+    public Region toEntity(RegionDto regionDto) {
+        log.info("RegionMapper.toEntity was called with {}", regionDto);
+        Region entity = new Region();
+        entity.setId(regionDto.getId());
+        entity.setRegionName(regionDto.getRegionName());
+        entity.setShortRegionName(regionDto.getShortRegionName());
+        return entity;
+    }
 }
